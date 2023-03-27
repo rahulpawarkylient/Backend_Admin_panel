@@ -1,5 +1,5 @@
 import express from "express";
-import {  editBanner, getBanner, login, navbar, service, updatenav, Updateservice } from "../controllers/adminController.js";
+import {  editBanner, getBanner, login, navbar, service, updatenav, Updateservice, UpdateWork, Work } from "../controllers/adminController.js";
 
 const router = express.Router();
 
@@ -12,11 +12,15 @@ router.post("/login", login)
 router.get("/navbar", navbar)
 router.put("/updatenavbar/:id", updatenav)
 
-
 /*Banner*/
 // router.post("/banner/post", banner);
 router.get("/banner", getBanner);
 router.put("/updatebanner/:id", editBanner);
+
+/*Work Section*/
+// router.post("/work/post", Work)
+router.get("/work", Work)
+router.put("/works/:id", UpdateWork)
 
 /*Iduk----Service Section*/
 // router.post("/service",service)

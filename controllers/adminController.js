@@ -4,7 +4,7 @@ import registerModel from "../models/adminModels/registerModel.js";
 import serviceModel from "../models/adminModels/ServiceModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import workModel from "../models/adminModels/WorkModel.js";
 
 /* Register Section Start */
 
@@ -14,23 +14,23 @@ import jwt from "jsonwebtoken";
 //     if (!name || !email || !password) {
 //       return res.status(400).json({ message: 'All fields are required' });
 //     }
-  
+
 //     // Check if user with the same email already exists
 //     const user = await registerModel.findOne({ email });
 //     if (user) {
 //       return res.status(400).json({ message: 'User with this email already exists' });
 //     }
-  
+
 //     // Check if password meets the requirements
 //     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,}$/;
 //     if (!passwordRegex.test(password)) {
 //       return res.status(400).json({ message: 'Password must have at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character' });
 //     }
-  
+
 //     // Hash the password
 //     const salt = await bcrypt.genSalt();
 //     const hashedPassword = await bcrypt.hash(password, salt);
-  
+
 //     // Create a new user
 //     const newUser = new registerModel({
 //       name,
@@ -39,7 +39,7 @@ import jwt from "jsonwebtoken";
 //       isAdmin: true, // set isAdmin to true for admin user
 //     });
 //     await newUser.save();
-  
+
 //     res.status(201).json({ message: 'User created successfully' });
 //   } catch (err) {
 //     console.error(err);
@@ -48,7 +48,6 @@ import jwt from "jsonwebtoken";
 // }
 
 /* Register Section End */
-
 
 /* Login Start */
 
@@ -64,16 +63,14 @@ export const login = async (req, res) => {
     // Compare the provided password with the hashed password in the database
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res
-        .status(401)
-        .json({ message: "Invalid Credentials" });
+      return res.status(401).json({ message: "Invalid Credentials" });
     }
     // Generate a JWT token
     const token = jwt.sign(
       { user: user.email, id: user._id },
       process.env.JWT_SECRET
     );
-    res.status(200).json({ message: "Admin Login Success..", token:token });
+    res.status(200).json({ message: "Admin Login Success..", token: token });
   } catch (error) {
     res.status(500).json({ message: "Error while logging in" });
   }
@@ -241,18 +238,17 @@ export const editBanner = async (req, res) => {
 
 /*Iduk------Service Section*/
 
-
 //Post Api
 // export const service = async (req,res) =>{
 //   try {
 //         const { heading, image, title, description } = req.body;
-    
+
 //         // Create new portfolio item using model and request body
 //         const newService = new serviceModel({ heading, image, title, description });
-    
+
 //         // Save new portfolio item to database
 //         const savedItem = await newService.save();
-    
+
 //         // Send response with saved portfolio item
 //         res.json({ success: true, serviceModel: savedItem });
 //       } catch (error) {
@@ -262,9 +258,8 @@ export const editBanner = async (req, res) => {
 //       }
 // }
 
-
 //Get Api
-export const service = async (req,res) =>{
+export const service = async (req, res) => {
   try {
     const serviceData = await serviceModel.find();
     res.status(200).json(serviceData);
@@ -272,16 +267,16 @@ export const service = async (req,res) =>{
     console.log(error);
     res.status(500).json({ message: "Something went wrong" });
   }
-}
+};
 
 //Update Api
 
-export const Updateservice = async (req,res) =>{
+export const Updateservice = async (req, res) => {
   const id = req.params.id;
-  const {  heading, image, title, description } = req.body;
+  const { heading, image, title, description } = req.body;
 
   const newService = {
-    heading:heading,
+    heading: heading,
     image: image,
     title: title,
     description: description,
@@ -296,4 +291,71 @@ export const Updateservice = async (req,res) =>{
     console.log(error);
     res.status(500).json({ message: "Something went wrong" });
   }
-}
+};
+
+/*Iduk------Service Section End*/
+
+/*Work Swction is Start*/
+
+//Post api
+
+// export const Work = async (req, res) => {
+//   try {
+//     const { heading, l1,l2,l3,l4,l5,l6,l7,l8 } = req.body;
+
+//     // Create new portfolio item using model and request body
+//     const newWork = new workModel({ heading, l1,l2,l3,l4,l5,l6,l7,l8 });
+
+//     // Save new portfolio item to database
+//     const savedItem = await newWork.save();
+
+//     // Send response with saved portfolio item
+//     res.json({ success: true, serviceModel: savedItem });
+//   } catch (error) {
+//     // Send error response
+//     console.log(error.message);
+//     res.status(400).json({ success: false, message: error.message });
+//   }
+// };
+
+//Get api
+export const Work = async (req, res) => {
+  try {
+    const workData = await workModel.find();
+    res.status(200).json(workData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+//Update Api
+
+export const UpdateWork = async (req, res) => {
+  const id = req.params.id;
+  const { heading, l1, l2, l3, l4, l5, l6, l7, l8 } = req.body;
+
+  const newWork = {
+    heading:heading,
+    l1:l1,
+    l2:l2,
+    l3:l3,
+    l4:l4,
+    l5:l5,
+    l6:l6,
+    l7:l7,
+    l8:l8,
+  };
+  console.log(id);
+  console.log(newWork);
+
+  try {
+    await workModel.findByIdAndUpdate(id, newWork, { new: true });
+    res.status(200).json(newWork);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+/*Work Swction is End*/
