@@ -16,6 +16,7 @@ import bioSocialModel from "../models/adminModels/BioSocialModel.js";
 import bioEmploymentModel from "../models/adminModels/BioEmploymentModel.js";
 import biographySocialModel from "../models/adminModels/BiographySocialModel.js";
 import biographyEducationModel from "../models/adminModels/BiographyEducationModel.js";
+import galleryModel from "../models/adminModels/galleryModel.js";
 
 /* Register Section Start */
 
@@ -683,7 +684,6 @@ export const updateIdsocialfb = async (req, res) => {
   }
 };
 
-
 //Delete By ID
 export const deleteOnefb = async (req, res) => {
   const id = req.params.id;
@@ -766,7 +766,6 @@ export const deleteOnetw = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
-
 
 /* Twitter Section End */
 
@@ -917,19 +916,13 @@ export const updatebiography = async (req, res) => {
 
 /* Biography Section  End*/
 
-
 /* Biography personal Social Section  Start*/
 
 // POST API
 
 export const bioSocial = async (req, res) => {
   try {
-    const {
-      title,
-      p1,
-      p2,
-      p3,
-    } = req.body;
+    const { title, p1, p2, p3 } = req.body;
     const newbiography = new bioSocialModel({
       title,
       p1,
@@ -963,12 +956,7 @@ export const getbioSocial = async (req, res) => {
 
 export const updatebioSocial = async (req, res) => {
   const id = req.params.id;
-  const {
-    title,
-    p1,
-    p2,
-    p3,
-  } = req.body;
+  const { title, p1, p2, p3 } = req.body;
   const newbiography = {
     title: title,
     p1: p1,
@@ -992,13 +980,7 @@ export const updatebioSocial = async (req, res) => {
 
 export const bioEmployment = async (req, res) => {
   try {
-    const {
-      title,
-      p1,
-      p2,
-      p3,
-      p4,
-    } = req.body;
+    const { title, p1, p2, p3, p4 } = req.body;
     const newbioEmployment = new bioEmploymentModel({
       title,
       p1,
@@ -1033,13 +1015,7 @@ export const getbioEmployment = async (req, res) => {
 
 export const updatebioEmployment = async (req, res) => {
   const id = req.params.id;
-  const {
-    title,
-    p1,
-    p2,
-    p3,
-    p4,
-  } = req.body;
+  const { title, p1, p2, p3, p4 } = req.body;
   const newbiography = {
     title: title,
     p1: p1,
@@ -1057,8 +1033,6 @@ export const updatebioEmployment = async (req, res) => {
 };
 
 /* Biography personal Social Section  End*/
-
-
 
 /* Biography Social Section  Start*/
 
@@ -1192,8 +1166,6 @@ export const updatebiographySocial = async (req, res) => {
   }
 };
 
-
-
 /* Biography Education Section  Start*/
 // POST
 export const biographyEducation = async (req, res) => {
@@ -1222,7 +1194,6 @@ export const biographyEducation = async (req, res) => {
   }
 };
 
-
 //GET
 
 export const getbiographyEducation = async (req, res) => {
@@ -1237,17 +1208,9 @@ export const getbiographyEducation = async (req, res) => {
 
 // PUT
 
-export const updatebiographyEducation = async(req,res) =>{
+export const updatebiographyEducation = async (req, res) => {
   const id = req.params.id;
-  const {
-    educationHeading,
-    p1,
-    p2,
-    p3,
-    p4,
-    p5,
-    p6,  
-  } = req.body;
+  const { educationHeading, p1, p2, p3, p4, p5, p6 } = req.body;
   const newbiographyEducation = {
     educationHeading: educationHeading,
     p1: p1,
@@ -1264,6 +1227,86 @@ export const updatebiographyEducation = async(req,res) =>{
     res.status(200).json(newbiographyEducation);
   } catch (error) {
     console.log(error, message);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+/* Gallery Section*/
+
+//post
+export const gallery = async (req, res) => {
+  try {
+    const { title, url, description } = req.body;
+
+    const newGalleryItem = new galleryModel({
+      title,
+      url,
+      description,
+    });
+
+    const galleryItem = await newGalleryItem.save();
+
+    res.json(galleryItem);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+//GET
+
+export const getgallery = async (req, res) => {
+  try {
+    const galleryData = await galleryModel.find();
+    res.status(200).json(galleryData);
+  } catch (error) {
+    console.log(error, message);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+// GET BY ID
+export const getIdGallery = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const galleryData = await galleryModel.findById(id);
+    res.status(200).json(galleryData);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+// PUT
+
+export const updateGallery = async (req, res) => {
+  const id = req.params.id;
+  const { title, url, description } = req.body;
+  const newGallery = {
+    title,
+    url,
+    description,
+  };
+  try {
+    await galleryModel.findByIdAndUpdate(id, newGallery, {
+      new: true,
+    });
+    res.status(200).json(newGallery);
+  } catch (error) {
+    console.log(error, message);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+
+//Delete By ID
+export const deleteGallery = async (req, res) => {
+  const id = req.params.id;
+  try {
+    await galleryModel.findByIdAndDelete(id);
+    res.status(200).json({ message: "Data Deleted" });
+  } catch (error) {
+    console.log(error.message);
     res.status(500).json({ message: "Something went wrong" });
   }
 };

@@ -9,11 +9,13 @@ import {
   biographySocial,
   bioSocial,
   connect,
+  deleteGallery,
   deleteOnefb,
   deleteOneSocial,
   deleteOnetw,
   editBanner,
   footer,
+  gallery,
   getBanner,
   getbioEmployment,
   getbiography,
@@ -21,6 +23,8 @@ import {
   getbiographySocial,
   getbioSocial,
   getfooter,
+  getgallery,
+  getIdGallery,
   getIdsocial,
   getIdsocialfb,
   getIdsocialTw,
@@ -44,6 +48,7 @@ import {
   updatebioSocial,
   updateConnect,
   updatefooter,
+  updateGallery,
   updateIdsocialfb,
   updateIdsocialTw,
   updateLatestBlog,
@@ -147,5 +152,13 @@ router.put("/biographySocial/:id",updatebiographySocial)
 router.post("/biography/education/post",biographyEducation);
 router.get("/biographyEducation",getbiographyEducation)
 router.put("/biographyEducation/:id",updatebiographyEducation)
+
+
+/* Biography Education Section */
+router.post("/gallery/post",gallery);
+router.get("/gallery",getgallery);
+router.get("/gallery/:id",getIdGallery);
+router.put("/gallery/:id",updateGallery);
+router.delete("/gallery/:id",deleteGallery);
 
 export default router;
