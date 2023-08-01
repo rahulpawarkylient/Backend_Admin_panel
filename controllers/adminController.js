@@ -35,7 +35,7 @@ export const getAllData = async (req, res) => {
     const biographySocial = await biographySocialModel.findOne();
     const biographyEducation = await biographyEducationModel.findOne();
 
-    const Data = {
+    const data = {
       homePage: {
         banner: {
           title: banner.title,
@@ -135,7 +135,7 @@ export const getAllData = async (req, res) => {
       },
     };
 
-    return res.json({Data:Data});
+    return res.json({data:data});
   } catch (error) {
     console.error("Error fetching data:", error);
     return res.status(500).json({ error: "Internal server error" });
