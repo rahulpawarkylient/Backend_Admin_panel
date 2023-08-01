@@ -265,8 +265,8 @@ export const updatenav = async (req, res) => {
     menu5: menu5,
     menu6: menu6,
   };
-  console.log(id);
-  console.log(newNavbar);
+  // console.log(id);
+  // console.log(newNavbar);
 
   try {
     await navbarModel.findByIdAndUpdate(id, newNavbar, { new: true });
@@ -357,8 +357,8 @@ export const editBanner = async (req, res) => {
     title: title,
     description: description,
   };
-  console.log(id);
-  console.log(newBanner);
+  // console.log(id);
+  // console.log(newBanner);
 
   try {
     await bannerModel.findByIdAndUpdate(id, newBanner, { new: true });
@@ -409,7 +409,7 @@ export const service = async (req, res) => {
 export const oneService = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
+    // console.log(id);
     serviceModel.findById(id, (err, services) => {
       if (err) {
         res.status(500).send(err);
@@ -439,8 +439,8 @@ export const Updateservice = async (req, res) => {
     title: title,
     description: description,
   };
-  console.log(id);
-  console.log(newService);
+  // console.log(id);
+  // console.log(newService);
 
   try {
     await serviceModel.findByIdAndUpdate(id, newService, { new: true });
@@ -504,8 +504,8 @@ export const UpdateWork = async (req, res) => {
     l7: l7,
     l8: l8,
   };
-  console.log(id);
-  console.log(newWork);
+  // console.log(id);
+  // console.log(newWork);
 
   try {
     await workModel.findByIdAndUpdate(id, newWork, { new: true });
@@ -556,7 +556,7 @@ export const connect = async (req, res) => {
 export const oneConnect = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
+    // console.log(id);
     connectModel.findById(id, (err, connect) => {
       if (err) {
         res.status(500).send(err);
@@ -635,7 +635,7 @@ export const allLatestBlog = async (req, res) => {
 export const oneLatestBlog = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
+    // console.log(id);
     latestBlogModel.findById(id, (err, blog) => {
       if (err) {
         res.status(500).send(err);
