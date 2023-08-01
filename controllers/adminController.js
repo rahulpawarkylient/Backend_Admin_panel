@@ -18,6 +18,130 @@ import biographySocialModel from "../models/adminModels/BiographySocialModel.js"
 import biographyEducationModel from "../models/adminModels/BiographyEducationModel.js";
 import galleryModel from "../models/adminModels/galleryModel.js";
 
+export const getAllData = async (req, res) => {
+  try {
+    const banner = await bannerModel.findOne();
+    const service = await serviceModel.find();
+    const serviceHeading = await serviceModel.findOne();
+    const work = await workModel.findOne();
+    const latestBlogHeading = await latestBlogModel.findOne();
+    const latestBlog = await latestBlogModel.find();
+    const client = await connectModel.find();
+    const clientHeading = await connectModel.findOne();
+    const footer = await footerModel.findOne();
+    const biography = await biographyModel.findOne();
+    const profileList = await bioSocialModel.findOne();
+    const Employment = await bioEmploymentModel.findOne();
+    const biographySocial = await biographySocialModel.findOne();
+    const biographyEducation = await biographyEducationModel.findOne();
+
+    const Data = {
+      homePage: {
+        banner: {
+          title: banner.title,
+          description: banner.description,
+          image: banner.image,
+        },
+        work: {
+          heading: work.heading,
+          list: Array.from({ length: 8 }, (_, index) => ({
+            item: work[`l${index + 1}`],
+          })),
+        },
+        helpText: {
+          heading: serviceHeading.heading,
+          gridData: service.map((services) => ({
+            logo: services.image,
+            logoTitle: services.title,
+            logoDescription: services.description,
+          })),
+        },
+        client: {
+          heading: clientHeading.heading,
+          clientList: client.map((client) => ({
+            logo: client.image,
+            title: client.title,
+            description: client.description,
+          })),
+        },
+      },
+      latestBlog: {
+        heading: latestBlogHeading.heading,
+        blogList: latestBlog.map((latestBlog) => ({
+          image: latestBlog.image,
+          title: latestBlog.title,
+          description: latestBlog.description,
+        })),
+      },
+      biographyPage: {
+        name: biography.imageName,
+        email: biography.email,
+        address: biography.address,
+        mobile: biography.mobile,
+        mainHeading: biography.mainHeading,
+        personalInfoTitle: biography.personalInfoTitle,
+
+        profileList: Array.from({ length: 3 }, (_, index) => ({
+          item: profileList[`p${index + 1}`],
+        })),
+
+        socialWork: Array.from({ length: 19 }, (_, index) => ({
+          item: biographySocial[`p${index + 1}`],
+        })),
+
+        otherData: {
+          education: [
+            {
+              item: biographyEducation.p1,
+            },
+            {
+              item: biographyEducation.p2,
+            },
+          ],
+
+          skills: [
+            {
+              item: biographyEducation.p3,
+            },
+            {
+              item: biographyEducation.p4,
+            },
+          ],
+
+          hobbies: [
+            {
+              item: biographyEducation.p5,
+            },
+            {
+              item: biographyEducation.p6,
+            },
+          ],
+
+          Employment: Array.from({ length: 4 }, (_, index) => ({
+            item: Employment[`p${index + 1}`],
+          })),
+        },
+      },
+      footer: {
+        Email: footer.email,
+        Phone: footer.mobile,
+        Address: footer.address,
+        AboutMe: {
+          ProfileName: footer.headingAbout,
+          Bio: footer.description,
+        },
+        SocialMediaLinks: {},
+        CopyRight: {},
+      },
+    };
+
+    return res.json({Data:Data});
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 /* Register Section Start */
 
 // export const register = async (req,res) =>{
@@ -1297,7 +1421,6 @@ export const updateGallery = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
-
 
 //Delete By ID
 export const deleteGallery = async (req, res) => {

@@ -16,6 +16,7 @@ import {
   editBanner,
   footer,
   gallery,
+  getAllData,
   getBanner,
   getbioEmployment,
   getbiography,
@@ -94,10 +95,10 @@ router.get("/connect/:id", oneConnect);
 router.put("/connect/:id", updateConnect);
 
 /*Latest Article Sections*/
-router.post("/latestblog/post",latestBlog)
-router.get("/latestblog",allLatestBlog)
-router.get("/latestblog/:id",oneLatestBlog)
-router.put("/latestblog/:id",updateLatestBlog)
+router.post("/latestblog/post", latestBlog);
+router.get("/latestblog", allLatestBlog);
+router.get("/latestblog/:id", oneLatestBlog);
+router.put("/latestblog/:id", updateLatestBlog);
 
 /* social Section */
 router.post("/social/post", social);
@@ -125,40 +126,39 @@ router.post("/footer/post", footer);
 router.get("/footer", getfooter);
 router.put("/footer/:id", updatefooter);
 
-
 /* Biography Section */
-router.post("/biography/post",biography);
-router.get("/biography",getbiography)
-router.put("/biography/:id",updatebiography)
-
+router.post("/biography/post", biography);
+router.get("/biography", getbiography);
+router.put("/biography/:id", updatebiography);
 
 /* Biography Personal Profile Social Section */
-router.post("/bioSocial/post",bioSocial);
-router.get("/bioSocial",getbioSocial)
-router.put("/bioSocial/:id",updatebioSocial)
-
+router.post("/bioSocial/post", bioSocial);
+router.get("/bioSocial", getbioSocial);
+router.put("/bioSocial/:id", updatebioSocial);
 
 /* Biography Employment Section */
-router.post("/bioEmployment/post",bioEmployment);
-router.get("/bioEmployment",getbioEmployment)
-router.put("/bioEmployment/:id",updatebioEmployment)
+router.post("/bioEmployment/post", bioEmployment);
+router.get("/bioEmployment", getbioEmployment);
+router.put("/bioEmployment/:id", updatebioEmployment);
 
 /* Biography Social Section */
-router.post("/biography/social/post",biographySocial);
-router.get("/biographySocial",getbiographySocial)
-router.put("/biographySocial/:id",updatebiographySocial)
+router.post("/biography/social/post", biographySocial);
+router.get("/biographySocial", getbiographySocial);
+router.put("/biographySocial/:id", updatebiographySocial);
 
 /* Biography Education Section */
-router.post("/biography/education/post",biographyEducation);
-router.get("/biographyEducation",getbiographyEducation)
-router.put("/biographyEducation/:id",updatebiographyEducation)
-
+router.post("/biography/education/post", biographyEducation);
+router.get("/biographyEducation", getbiographyEducation);
+router.put("/biographyEducation/:id", updatebiographyEducation);
 
 /* Biography Education Section */
-router.post("/gallery/post",gallery);
-router.get("/gallery",getgallery);
-router.get("/gallery/:id",getIdGallery);
-router.put("/gallery/:id",updateGallery);
-router.delete("/gallery/:id",deleteGallery);
+router.post("/gallery/post", gallery);
+router.get("/gallery", getgallery);
+router.get("/gallery/:id", getIdGallery);
+router.put("/gallery/:id", updateGallery);
+router.delete("/gallery/:id", deleteGallery);
+
+// Combine Route of all Get APi
+router.get("/view", getAllData);
 
 export default router;
